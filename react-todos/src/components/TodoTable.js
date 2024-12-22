@@ -12,7 +12,13 @@ export default function TodoTable(props) {
 			</thead>
 			<tbody>
                 {props.todos.map(todo => (
-                    <TodoRowItem rowNumber={todo.rowNumber} rowDescription={todo.rowDescription} rowAssigned={todo.rowAssigned} />  
+                    <TodoRowItem 
+						key={todo.rowNumber}
+						rowNumber={todo.rowNumber} 
+						rowDescription={todo.rowDescription} 
+						rowAssigned={todo.rowAssigned} 
+						deleteTodo={props.deleteTodo}
+					/>  
                 ))}
 			</tbody>
 		</table>
