@@ -1,6 +1,7 @@
+import React, { ChangeEvent } from "react";
 import { useState } from "react";
 
-function NewTodoForm(props) {
+export const NewTodoForm: React.FC<{addTodo: Function}> = (props) => {
 
     const [description, setDescription] = useState('');
 
@@ -14,7 +15,7 @@ function NewTodoForm(props) {
         setAssigned(event.target.value);
     }*/
 
-    const onChange = (e) => {
+    const onChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         if (name === 'assigned') setAssigned(value);
         if (name === 'description') setDescription(value);
@@ -66,5 +67,3 @@ function NewTodoForm(props) {
         </div>
     )
 }
-
-export default NewTodoForm;
