@@ -2,7 +2,7 @@ import BookModel from "../../models/BookModel";
 
 export const renderDefaultBookImage = (width: string, height: string, alt: string) => {
 	return (
-		<img src={require("../../../Images/BooksImages/book-luv2code-1000.png")} width={width} height={height} alt={alt} />
+		<img src={require("../../Images/BooksImages/book-luv2code-1000.png")} width={width} height={height} alt={alt} />
 	);
 };
 

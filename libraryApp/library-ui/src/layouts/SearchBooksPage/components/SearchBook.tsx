@@ -8,7 +8,10 @@ export const SearchBook: React.FC<{ book: BookModel }> = (props) => {
 			<div className="row g-0">
 				<div className="col-md-2">
 					<div className="d-none d-lg-block">
-						{props.book.img ? renderBookImage(props.book.img, "123", "196", "book") : renderDefaultBookImage("123", "196", "Book")}	
+						{props.book.img ? renderBookImage(props.book.img, "123", "196", "book") : renderDefaultBookImage("123", "196", "Book")}
+					</div>
+					<div className="d-lg-none d-flex justify-content-center align-items-center">
+						{props.book.img ? renderBookImage(props.book.img, "123", "196", "book") : renderDefaultBookImage("123", "196", "Book")}
 					</div>
 				</div>
 				<div className="col-md-6">
@@ -23,5 +26,5 @@ export const SearchBook: React.FC<{ book: BookModel }> = (props) => {
 				</div>
 			</div>
 		</div>
-	)
+	);
 }
