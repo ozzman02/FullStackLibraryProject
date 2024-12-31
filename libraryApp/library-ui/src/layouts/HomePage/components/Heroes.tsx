@@ -1,4 +1,10 @@
+import { useOktaAuth } from "@okta/okta-react";
+import { showExploreTopBooksBtn, showSignUpBtn } from "../../Utils/AppUtil";
+
 export const Heroes = () => {
+
+	const { authState } = useOktaAuth();
+
 	return (
 		<div>
 			<div className="d-none d-lg-block">
@@ -14,7 +20,7 @@ export const Heroes = () => {
 								Whether it is to learn a new skill or grow with one,
 								we will be able to provide the top content for you!
 							</p>
-							<a className="btn main-color btn-lg text-white" href="#">Sign up</a>
+							{ authState?.isAuthenticated ? showExploreTopBooksBtn() : showSignUpBtn() }
 						</div>
 					</div>
 				</div>
@@ -47,7 +53,7 @@ export const Heroes = () => {
 								Whether it is to learn a new skill or grow with one,
 								we will be able to provide the top content for you!
 							</p>
-							<a className="btn main-color btn-lg text-white" href="#">Sign up</a>
+							{ authState?.isAuthenticated ? showExploreTopBooksBtn() : showSignUpBtn() }
 						</div>
 					</div>
 					<div className="m-2">
