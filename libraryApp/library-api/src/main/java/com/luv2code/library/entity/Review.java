@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "review")
@@ -76,5 +77,30 @@ public class Review {
 
     public void setReviewDescription(String reviewDescription) {
         this.reviewDescription = reviewDescription;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Review review = (Review) o;
+        return Double.compare(rating, review.rating) == 0 &&
+                Objects.equals(id, review.id) &&
+                Objects.equals(userEmail, review.userEmail) &&
+                Objects.equals(date, review.date) &&
+                Objects.equals(bookId, review.bookId) &&
+                Objects.equals(reviewDescription, review.reviewDescription);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hashCode(id);
+        result = 31 * result + Objects.hashCode(userEmail);
+        result = 31 * result + Objects.hashCode(date);
+        result = 31 * result + Double.hashCode(rating);
+        result = 31 * result + Objects.hashCode(bookId);
+        result = 31 * result + Objects.hashCode(reviewDescription);
+        return result;
     }
 }
