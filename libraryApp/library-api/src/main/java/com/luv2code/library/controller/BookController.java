@@ -4,10 +4,14 @@ import com.luv2code.library.entity.Book;
 import com.luv2code.library.service.BookService;
 import org.springframework.web.bind.annotation.*;
 
+import static com.luv2code.library.utils.ExtractJWT.payloadJwtExtraction;
+
 @CrossOrigin("http://localhost:3000")
 @RestController
 @RequestMapping("/api/books")
 public class BookController {
+
+    private static final String extractionValue = "\"sub\"";
 
     private final BookService bookService;
 
@@ -16,20 +20,22 @@ public class BookController {
     }
 
     @PutMapping("/secure/checkout")
-    public Book checkoutBook(@RequestParam Long bookId) {
-        String userEmail = "testuser@email.com";
+    public Book checkoutBook(@RequestHeader(value = "Authorization") String token,
+                             @RequestParam Long bookId) {
+        String userEmail = payloadJwtExtraction(token, extractionValue);
         return bookService.checkoutBook(userEmail, bookId);
     }
 
     @GetMapping("/secure/ischeckedout/byuser")
-    public Boolean isBookCheckedOutByUser(@RequestParam Long bookId) {
-        String userEmail = "testuser@email.com";
+    public Boolean isBookCheckedOutByUser(@RequestHeader(value = "Authorization") String token,
+                                          @RequestParam Long bookId) {
+        String userEmail = payloadJwtExtraction(token, extractionValue);
         return bookService.isBookCheckedOutByUser(userEmail, bookId);
     }
 
     @GetMapping("/secure/currentloans/count")
-    public int currentLoansCount() {
-        String userEmail = "testuser@email.com";
+    public int currentLoansCount(@RequestHeader(value = "Authorization") String token) {
+        String userEmail = payloadJwtExtraction(token, extractionValue);
         return bookService.currentLoansCount(userEmail);
     }
 
