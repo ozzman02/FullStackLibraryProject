@@ -4,14 +4,13 @@ import com.luv2code.library.entity.Book;
 import com.luv2code.library.service.BookService;
 import org.springframework.web.bind.annotation.*;
 
+import static com.luv2code.library.constants.ApplicationConstants.extractionValue;
 import static com.luv2code.library.utils.ExtractJWT.payloadJwtExtraction;
 
 @CrossOrigin("http://localhost:3000")
 @RestController
 @RequestMapping("/api/books")
 public class BookController {
-
-    private static final String extractionValue = "\"sub\"";
 
     private final BookService bookService;
 
