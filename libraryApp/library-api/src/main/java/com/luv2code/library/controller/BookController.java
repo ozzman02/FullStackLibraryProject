@@ -1,8 +1,11 @@
 package com.luv2code.library.controller;
 
 import com.luv2code.library.entity.Book;
+import com.luv2code.library.responsemodels.ShelfCurrentLoansResponse;
 import com.luv2code.library.service.BookService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static com.luv2code.library.constants.ApplicationConstants.extractionValue;
 import static com.luv2code.library.utils.ExtractJWT.payloadJwtExtraction;
@@ -21,21 +24,24 @@ public class BookController {
     @PutMapping("/secure/checkout")
     public Book checkoutBook(@RequestHeader(value = "Authorization") String token,
                              @RequestParam Long bookId) {
-        String userEmail = payloadJwtExtraction(token, extractionValue);
-        return bookService.checkoutBook(userEmail, bookId);
+        return bookService.checkoutBook(payloadJwtExtraction(token, extractionValue), bookId);
     }
 
     @GetMapping("/secure/ischeckedout/byuser")
     public Boolean isBookCheckedOutByUser(@RequestHeader(value = "Authorization") String token,
                                           @RequestParam Long bookId) {
-        String userEmail = payloadJwtExtraction(token, extractionValue);
-        return bookService.isBookCheckedOutByUser(userEmail, bookId);
+        return bookService.isBookCheckedOutByUser(payloadJwtExtraction(token, extractionValue), bookId);
     }
 
     @GetMapping("/secure/currentloans/count")
     public int currentLoansCount(@RequestHeader(value = "Authorization") String token) {
-        String userEmail = payloadJwtExtraction(token, extractionValue);
-        return bookService.currentLoansCount(userEmail);
+        return bookService.currentLoansCount(payloadJwtExtraction(token, extractionValue));
+    }
+
+    @GetMapping("/secure/currentloans")
+    public List<ShelfCurrentLoansResponse> currentLoans(@RequestHeader(value = "Authorization") String token)
+            throws Exception {
+        return bookService.currentLoans(payloadJwtExtraction(token, extractionValue));
     }
 
 }
