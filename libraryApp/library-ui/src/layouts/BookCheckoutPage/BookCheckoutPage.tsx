@@ -55,7 +55,7 @@ export const BookCheckoutPage = () => {
 				copies: responseJson.copies,
 				copiesAvailable: responseJson.copiesAvailable,
 				category: responseJson.category,
-				img: responseJson.image,
+				image: responseJson.image,
 			};
 			setBook(loadedBook);
 			setIsLoading(false);
@@ -234,7 +234,7 @@ export const BookCheckoutPage = () => {
 			<div className="container d-none d-lg-block">
 				<div className="row mt-5">
 					<div className="col-sm-2 col-md-2">
-						{book?.img ? renderBookImage(book.img, '226', '349', 'Book') : renderDefaultBookImage('226', '349', 'Book')}
+						{book?.image ? renderBookImage(book.image, '226', '349', 'Book') : renderDefaultBookImage('226', '349', 'Book')}
 					</div>
 					<div className="col-4 col-md-4 container">
 						<div className="ml-2">
@@ -261,7 +261,7 @@ export const BookCheckoutPage = () => {
 			{/* Mobile */}
 			<div className="container d-lg-none mt-5">
 				<div className="d-flex justify-content-center align-items-center">
-					{book?.img ? renderBookImage(book.img, '226', '349', 'Book') : renderDefaultBookImage('226', '349', 'Book')}
+					{book?.image ? renderBookImage(book.image, '226', '349', 'Book') : renderDefaultBookImage('226', '349', 'Book')}
 				</div>
 				<div className="mt-4">
 					<div className="ml-2">
