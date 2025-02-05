@@ -1,6 +1,13 @@
+import { useState } from "react";
+import { HistoryPage } from "./Components/HistoryPage";
 import { Loans } from "./Components/Loans";
 
 export const ShelfPage = () => {
+
+	const [historyClick, setHistoryClick] = useState(false);
+
+
+
 	return (
 		<div className="container">
 			<div className="mt-3">
@@ -15,6 +22,7 @@ export const ShelfPage = () => {
 							role="tab"
 							aria-controls="nav-loans"
 							aria-selected='true'
+							onClick={() => setHistoryClick(false)}
 						>
 							Loans
 						</button>
@@ -27,6 +35,7 @@ export const ShelfPage = () => {
 							role="tab"
 							aria-controls="nav-history"
 							aria-selected='false'
+							onClick={() => setHistoryClick(true)}
 						>
 							Your History
 						</button>
@@ -37,7 +46,8 @@ export const ShelfPage = () => {
 						<Loans />
 					</div>
 					<div className="tab-pane fade" id="nav-history" role="tabpanel" aria-labelledby="nav-history-tab">
-						<p>Checkout History</p>
+						{/* Force new useEffect upload each time the history page opens up */}
+						{historyClick ? <HistoryPage /> : <></>}
 					</div>
 				</div>
 			</div>
