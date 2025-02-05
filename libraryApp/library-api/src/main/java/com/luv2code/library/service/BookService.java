@@ -2,8 +2,10 @@ package com.luv2code.library.service;
 
 import com.luv2code.library.dao.BookRepository;
 import com.luv2code.library.dao.CheckoutRepository;
+import com.luv2code.library.dao.HistoryRepository;
 import com.luv2code.library.entity.Book;
 import com.luv2code.library.entity.Checkout;
+import com.luv2code.library.entity.History;
 import com.luv2code.library.responsemodels.ShelfCurrentLoansResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,9 +25,14 @@ public class BookService {
 
     private final CheckoutRepository checkoutRepository;
 
-    public BookService(BookRepository bookRepository, CheckoutRepository checkoutRepository) {
+    private final HistoryRepository historyRepository;
+
+    public BookService(BookRepository bookRepository,
+                       CheckoutRepository checkoutRepository,
+                       HistoryRepository historyRepository) {
         this.bookRepository = bookRepository;
         this.checkoutRepository = checkoutRepository;
+        this.historyRepository = historyRepository;
     }
 
     public Book checkoutBook(String userEmail, Long bookId) {
@@ -87,6 +94,17 @@ public class BookService {
         book.get().setCopiesAvailable(book.get().getCopiesAvailable() + 1);
         bookRepository.save(book.get());
         checkoutRepository.deleteById(validateCheckout.getId());
+
+        History history = new History(
+                userEmail,
+                validateCheckout.getCheckoutDate(),
+                LocalDate.now().toString(),
+                book.get().getTitle(),
+                book.get().getAuthor(),
+                book.get().getDescription(),
+                book.get().getImage()
+        );
+        historyRepository.save(history);
     }
 
     public void renewLoan(String userEmail, Long bookId) throws Exception {
