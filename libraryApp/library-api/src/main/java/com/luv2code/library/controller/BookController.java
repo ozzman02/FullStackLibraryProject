@@ -44,4 +44,15 @@ public class BookController {
         return bookService.currentLoans(payloadJwtExtraction(token, extractionValue));
     }
 
+    @PutMapping("/secure/return")
+    public void returnBook(@RequestHeader(value = "Authorization") String token,
+                           @RequestParam Long bookId) throws Exception {
+        bookService.returnBook(payloadJwtExtraction(token, extractionValue), bookId);
+    }
+
+    @PutMapping("/secure/renew/loan")
+    public void renewLoan(@RequestHeader(value = "Authorization") String token,
+                           @RequestParam Long bookId) throws Exception {
+        bookService.renewLoan(payloadJwtExtraction(token, extractionValue), bookId);
+    }
 }
