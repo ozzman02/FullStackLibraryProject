@@ -44,7 +44,7 @@ export const Loans = () => {
 			setHttpError(error.message);
 		});
 		window.scrollTo(0, 0);
-	}, [authState]);
+	}, [authState, checkout]);
 
 	if (isLoadingUserLoans) {
 		return (
@@ -61,7 +61,7 @@ export const Loans = () => {
 	}
 
 	async function returnBook(bookId: number) {
-        const url = `http://localhost:8080/api/books/secure/return/?bookId=${bookId}`;
+        const url = `http://localhost:8080/api/books/secure/return?bookId=${bookId}`;
         const requestOptions = {
             method: 'PUT',
             headers: {
@@ -77,7 +77,7 @@ export const Loans = () => {
     }
 
 	async function renewLoan(bookId: number) {
-        const url = `http://localhost:8080/api/books/secure/renew/loan/?bookId=${bookId}`;
+        const url = `http://localhost:8080/api/books/secure/renew/loan?bookId=${bookId}`;
         const requestOptions = {
             method: 'PUT',
             headers: {
@@ -154,8 +154,7 @@ export const Loans = () => {
                                 </div>
                             </div>
                             <hr/>
-                            <LoansModal shelfCurrentLoan={shelfCurrentLoan} mobile={false} returnBook={returnBook} 
-                                renewLoan={renewLoan}/>
+                            <LoansModal shelfCurrentLoan={shelfCurrentLoan} mobile={false} returnBook={returnBook} renewLoan={renewLoan}/>
                         </div>
                     ))}
                 </> :
@@ -227,8 +226,7 @@ export const Loans = () => {
                                 </div>
                             
                             <hr/>
-                            <LoansModal shelfCurrentLoan={shelfCurrentLoan} mobile={true} returnBook={returnBook} 
-                                renewLoan={renewLoan}/>
+                            <LoansModal shelfCurrentLoan={shelfCurrentLoan} mobile={true} returnBook={returnBook} renewLoan={renewLoan}/>
                         </div>
                     ))}
                 </> :
