@@ -6,8 +6,6 @@ export const ShelfPage = () => {
 
 	const [historyClick, setHistoryClick] = useState(false);
 
-
-
 	return (
 		<div className="container">
 			<div className="mt-3">
