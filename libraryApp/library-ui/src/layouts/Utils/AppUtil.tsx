@@ -26,6 +26,6 @@ export const showSignUpBtn = () => {
 
 export const showLibraryServicesBtn = () => {
 	return (
-		<Link className="btn main-color btn-lg text-white" to="#">Library Services</Link>
+		<Link className="btn main-color btn-lg text-white" to="/messages">Library Services</Link>
 	);
 };
