@@ -11,6 +11,14 @@ export const Navbar = () => {
 	}
 
 	const handleLogout = async () => oktaAuth.signOut();
+	
+	/*const handleLogout = () => {
+		oktaAuth.closeSession();	
+		oktaAuth.clearStorage();
+		setTimeout(() => {
+			window.location.href = '/';
+		}, 500);
+	}*/
 
 	const showSignInButton = () => {
 		return (
@@ -27,6 +35,8 @@ export const Navbar = () => {
 			</li>
 		);
 	}
+
+	console.log(authState);
 
     return (
         <nav className='navbar navbar-expand-lg navbar-dark main-color py-3'>
