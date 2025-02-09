@@ -39,9 +39,9 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         repositoryRestConfiguration.getExposureConfiguration()
                 .forDomainType(theClass)
                 .withItemExposure(((metadata, httpMethods) ->
-                        httpMethods.disable(MyDataRestConfig.UNSUPPORTED_ACTIONS)))
+                        httpMethods.disable(UNSUPPORTED_ACTIONS)))
                 .withCollectionExposure((metadata, httpMethods) ->
-                        httpMethods.disable(MyDataRestConfig.UNSUPPORTED_ACTIONS));
+                        httpMethods.disable(UNSUPPORTED_ACTIONS));
     }
 
 }

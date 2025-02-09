@@ -34,6 +34,19 @@ public class Book {
     @Column(name = "img")
     private String image;
 
+    public Book() {
+    }
+
+    public Book(String title, String author, String description, int copies, int copiesAvailable, String category, String image) {
+        this.title = title;
+        this.author = author;
+        this.description = description;
+        this.copies = copies;
+        this.copiesAvailable = copiesAvailable;
+        this.category = category;
+        this.image = image;
+    }
+
     public Long getId() {
         return id;
     }
