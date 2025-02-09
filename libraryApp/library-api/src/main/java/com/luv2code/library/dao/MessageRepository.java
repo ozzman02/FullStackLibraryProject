@@ -10,4 +10,6 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
 
     Page<Message> findByUserEmail(@RequestParam("userEmail") String userEmail, Pageable pageable);
 
+    Page<Message> findByClosed(@RequestParam("closed") boolean closed, Pageable pageable);
+
 }
