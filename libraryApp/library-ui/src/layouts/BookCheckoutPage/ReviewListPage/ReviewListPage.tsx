@@ -14,7 +14,7 @@ export const ReviewListPage = () => {
 
 	const [currentPage, setCurrentPage] = useState(1);
 
-	const [reviewsPerPage, setReviewsPerPage] = useState(5);
+	const [reviewsPerPage] = useState(5);
 
 	const [totalAmountOfReviews, setTotalAmountReviews] = useState(0);
 
@@ -24,7 +24,8 @@ export const ReviewListPage = () => {
 
 	useEffect(() => {
 		const fetchBookReviews = async () => {
-			const reviewUrl: string = `http://localhost:8080/api/reviews/search/findByBookId?bookId=${bookId}&page=${currentPage - 1}&size=${reviewsPerPage}`;
+			const baseUrl = "http://localhost:8080/api/reviews/search/findByBookId";
+			const reviewUrl: string = `${baseUrl}?bookId=${bookId}&page=${currentPage - 1}&size=${reviewsPerPage}`;
 			const responseReviews = await fetch(reviewUrl);
 			if (!responseReviews.ok) {
 				throw new Error('Something went wrong!');

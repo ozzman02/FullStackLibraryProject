@@ -3,6 +3,8 @@ import { Fragment, useEffect, useState } from "react";
 import MessageModel from "../../../models/MessageModel";
 import { SpinnerLoading } from "../../Utils/SpinnerLoading";
 import { Pagination } from "../../Utils/Pagination";
+import { AdminMessage } from "./AdminMessage";
+import AdminMessageRequest from "../../../models/AdminMessageRequest";
 
 export const AdminMessages = () => {
 
@@ -14,6 +16,7 @@ export const AdminMessages = () => {
 	const [messagesPerPage] = useState(5);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [totalPages, setTotalPages] = useState(0);
+	const [btnSubmit, setBtnSubmit] = useState(false);
 
 	useEffect(() => {
 		const fetchUserMessages = async () => {
@@ -55,7 +58,7 @@ export const AdminMessages = () => {
 			setHttpError(error.message);
 		})
 		window.scrollTo(0, 0);
-	}, [authState, currentPage, messagesPerPage]);
+	}, [authState, currentPage, messagesPerPage, btnSubmit]);
 
 	if (isLoadingMessages) {
 		return (<SpinnerLoading/>);
@@ -67,13 +70,34 @@ export const AdminMessages = () => {
 
 	const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
+	async function submitResponseToQuestion(id: number, response: string) {
+		if (authState && authState?.isAuthenticated && id !== null && response !== '') {
+			const messageAdminRequestModel: AdminMessageRequest = new AdminMessageRequest(id, response);
+			const userEmail = authState?.accessToken?.claims.sub;
+			const userType = authState?.accessToken?.claims.userType;
+			const requestOptions = {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json'	
+				},
+				body: JSON.stringify(messageAdminRequestModel)
+			};
+			const url = `http://localhost:8080/api/messages/admin/message?userEmail=${userEmail}&userType=${userType}`;
+			const messageAdminRequestModelResponse = await fetch(url, requestOptions);
+			if (!messageAdminRequestModelResponse.ok) {
+				throw new Error('Something went wrong');
+			}
+			setBtnSubmit(!btnSubmit);
+		}
+	}
+
 	return (
 		<div className="mt-3">
 			{messages.length > 0 ? 
 				<Fragment>
 					<h5>Pending Q/A: </h5>
 					{messages.map(message => (
-						<p>Questions that need a response</p>
+						<AdminMessage message={message} key={message.id} submitResponseToQuestion={submitResponseToQuestion} />
 					))}
 				</Fragment> 
 				:

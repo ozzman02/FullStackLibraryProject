@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useOktaAuth } from "@okta/okta-react";
 import { Fragment, useEffect, useState } from "react";
 import MessageModel from "../../../models/MessageModel";
@@ -15,7 +14,7 @@ export const Messages = () => {
 
 	const [messages, setMessages] = useState<MessageModel[]>([]);
 
-	const [messagesPerPage, setMessagesPerPage] = useState(5);
+	const [messagesPerPage] = useState(5);
 
 	const [currentPage, setCurrentPage] = useState(1)
 
@@ -92,6 +91,5 @@ export const Messages = () => {
             }
             {totalPages > 1 && <Pagination currentPage={currentPage} totalPages={totalPages} paginate={paginate}/>}
         </div>
-
 	);
 }
