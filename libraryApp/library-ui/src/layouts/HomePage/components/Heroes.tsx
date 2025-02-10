@@ -1,9 +1,21 @@
 import { useOktaAuth } from "@okta/okta-react";
-import { showExploreTopBooksBtn, showSignUpBtn } from "../../Utils/AppUtil";
+import { Link } from "react-router-dom";
 
 export const Heroes = () => {
 
 	const { authState } = useOktaAuth();
+
+	const showExploreTopBooksBtn = () => {
+		return (
+			<Link className="btn main-color btn-lg text-white" to="search">Explore top books</Link>
+		);
+	};
+	
+	const showSignUpBtn = () => {
+		return (
+			<Link className="btn main-color btn-lg text-white" to="/login">Sign up</Link>
+		);
+	};
 
 	return (
 		<div>

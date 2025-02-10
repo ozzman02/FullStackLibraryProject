@@ -1,4 +1,5 @@
 import ShelfCurrentLoans from "../../../models/ShelfCurrentLoans";
+import { renderBookImage, renderDefaultBookImage } from "../../Utils/AppUtil";
 
 export const LoansModal: React.FC<{ 
 	shelfCurrentLoan: ShelfCurrentLoans, 
@@ -6,6 +7,9 @@ export const LoansModal: React.FC<{
 	returnBook: any,
     renewLoan: any 
 }> = (props) => {
+
+	const defaultBookImage = './../../../Images/BooksImages/book-luv2code-1000.png';
+
     return (
         <div 
 			className='modal fade' 
@@ -28,14 +32,9 @@ export const LoansModal: React.FC<{
                                 <div className='row'>
                                     <div className='col-2'>
                                         {props.shelfCurrentLoan.book?.image ?
-                                            <img src={props.shelfCurrentLoan.book?.image} width='56' height='87' alt='Book'/>
+											renderBookImage(props.shelfCurrentLoan.book?.image, "56", "87", "Book")
                                             :
-                                            <img 
-												src={require('./../../../Images/BooksImages/book-luv2code-1000.png')} 
-												width='56' 
-												height='87' 
-												alt='Book'
-											/>
+											renderDefaultBookImage(defaultBookImage, "56", "87", "Book")
                                         }
                                     </div>
                                     <div className='col-10'>

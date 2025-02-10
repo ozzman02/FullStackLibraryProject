@@ -22,19 +22,20 @@ public class MessagesService {
         messageRepository.save(message);
     }
 
-    public void putMessage(AdminQuestionRequest adminQuestionRequest,
-                           String userEmail,
-                           String userType) throws Exception {
+    public void putMessage(AdminQuestionRequest adminQuestionRequest, String userEmail, String userType)
+            throws Exception {
 
         if (userType == null || !userType.equals("admin"))
             throw new Exception("Administration page only");
 
         Message message = messageRepository.findById(adminQuestionRequest.getId())
-                 .orElseThrow(() -> new Exception("Message not found"));
+                .orElseThrow(() -> new Exception("Message not found"));
 
         message.setAdminEmail(userEmail);
         message.setResponse(adminQuestionRequest.getResponse());
         message.setClosed(true);
+
         messageRepository.save(message);
     }
+
 }

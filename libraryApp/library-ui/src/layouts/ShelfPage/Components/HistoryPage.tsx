@@ -4,6 +4,7 @@ import HistoryModel from "../../../models/HistoryModel";
 import { SpinnerLoading } from "../../Utils/SpinnerLoading";
 import { Link } from "react-router-dom";
 import { Pagination } from "../../Utils/Pagination";
+import { renderBookImage, renderDefaultBookImage } from "../../Utils/AppUtil";
 
 export const HistoryPage = () => {
 
@@ -60,6 +61,8 @@ export const HistoryPage = () => {
 
 	const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
+	const defaultBookImage = './../../../Images/BooksImages/book-luv2code-1000.png';
+
 	return (
 		<div className="mt-2">
 			{histories.length > 0 ? 
@@ -72,16 +75,16 @@ export const HistoryPage = () => {
 									<div className="col-md-2">
 										<div className="d-none d-lg-block">
 											{history.img ? 
-												<img src={history.img} width='123' height='196' alt="Book" /> 
+												renderBookImage(history.img, "123", "196", "Book")
 												: 
-												<img src={require('./../../../Images/BooksImages/book-luv2code-1000.png')} width='123' height='196' alt="Default" />
+												renderDefaultBookImage(defaultBookImage, "123", "196", "Default")
 											}
 										</div>
 										<div className="d-lg-none d-flex justify-content-center align-items-center">
 											{history.img ? 
-												<img src={history.img} width='123' height='196' alt="Book" /> 
+												renderBookImage(history.img, "123", "196", "Book") 
 												: 
-												<img src={require('./../../../Images/BooksImages/book-luv2code-1000.png')} width='123' height='196' alt="Default" />
+												renderDefaultBookImage(defaultBookImage, "123", "196", "Default")
 											}
 										</div>
 									</div>

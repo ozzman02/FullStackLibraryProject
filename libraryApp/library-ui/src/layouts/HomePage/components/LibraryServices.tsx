@@ -1,9 +1,21 @@
 import { useOktaAuth } from "@okta/okta-react";
-import { showLibraryServicesBtn, showSignUpBtn } from "../../Utils/AppUtil";
+import { Link } from "react-router-dom";
 
 export const LibraryServices = () => {
 
 	const { authState } = useOktaAuth();
+
+	const showLibraryServicesBtn = () => {
+		return (
+			<Link className="btn main-color btn-lg text-white" to="/messages">Library Services</Link>
+		);
+	};
+
+	const showSignUpBtn = () => {
+		return (
+			<Link className="btn main-color btn-lg text-white" to="/login">Sign up</Link>
+		);
+	};
 	
 	return (
 		<div className="container my-5">

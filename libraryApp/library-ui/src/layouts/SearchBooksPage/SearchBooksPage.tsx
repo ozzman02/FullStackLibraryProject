@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Fragment, useEffect, useState } from "react";
 import BookModel from "../../models/BookModel";
 import { SpinnerLoading } from "../Utils/SpinnerLoading";
-import { SearchBook } from "./components/SearchBook";
+import { SearchBook } from "./Components/SearchBook";
 import { Pagination } from "../Utils/Pagination";
 
 export const SearchBooksPage = () => {
@@ -16,7 +15,7 @@ export const SearchBooksPage = () => {
 
 	const [currentPage, setCurrentPage] = useState(1);
 
-	const [booksPerPage, setBooksPerPage] = useState(5);
+	const [booksPerPage] = useState(5);
 
 	const [totalAmountOfBooks, setTotalAmountOfBooks] = useState(0);
 

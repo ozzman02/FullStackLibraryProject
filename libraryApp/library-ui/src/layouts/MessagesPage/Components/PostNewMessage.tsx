@@ -74,13 +74,7 @@ export const PostNewMessage = () => {
 						</textarea>
 					</div>
 					<div>
-						<button 
-							type='button' 
-							className="btn btn-primary mt-3"
-							onClick={submitNewQuestion}
-						>
-							Submit Question
-						</button>
+						<button type='button' className="btn btn-primary mt-3" onClick={submitNewQuestion}>Submit Question</button>
 					</div>
 				</form>
 			</div>

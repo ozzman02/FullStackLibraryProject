@@ -229,12 +229,18 @@ export const BookCheckoutPage = () => {
 		setIsReviewLeft(true);
 	}
 
+	const defaultBookImage = '../../Images/BooksImages/book-luv2code-1000.png';
+
 	return (
 		<div>
 			<div className="container d-none d-lg-block">
 				<div className="row mt-5">
 					<div className="col-sm-2 col-md-2">
-						{book?.image ? renderBookImage(book.image, '226', '349', 'Book') : renderDefaultBookImage('226', '349', 'Book')}
+						{book?.image ? 
+							renderBookImage(book.image, '226', '349', 'Book') 
+							: 
+							renderDefaultBookImage(defaultBookImage, '226', '349', 'Book')
+						}
 					</div>
 					<div className="col-4 col-md-4 container">
 						<div className="ml-2">
@@ -261,7 +267,11 @@ export const BookCheckoutPage = () => {
 			{/* Mobile */}
 			<div className="container d-lg-none mt-5">
 				<div className="d-flex justify-content-center align-items-center">
-					{book?.image ? renderBookImage(book.image, '226', '349', 'Book') : renderDefaultBookImage('226', '349', 'Book')}
+					{book?.image ? 
+						renderBookImage(book.image, '226', '349', 'Book') 
+						: 
+						renderDefaultBookImage(defaultBookImage, '226', '349', 'Book')
+					}
 				</div>
 				<div className="mt-4">
 					<div className="ml-2">
