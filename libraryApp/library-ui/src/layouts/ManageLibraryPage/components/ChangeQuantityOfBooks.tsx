@@ -20,6 +20,8 @@ export const ChangeQuantityOfBooks = () => {
 
 	const [totalPages, setTotalPages] = useState(0);
 
+	const [bookDelete, setBookDelete] = useState(false);
+
 	useEffect(() => {
 		const fetchBooks = async () => {
 			const baseUrl: string = `http://localhost:8080/api/books?page=${currentPage - 1}&size=${booksPerPage}`;
@@ -51,7 +53,9 @@ export const ChangeQuantityOfBooks = () => {
 			setIsLoading(false);
 			setHttpError(error.message);
 		});
-	}, [currentPage, booksPerPage]);
+	}, [currentPage, booksPerPage, bookDelete]);
+
+	const deleteBook = () => setBookDelete(!bookDelete);
 
 	const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
@@ -80,7 +84,7 @@ export const ChangeQuantityOfBooks = () => {
 					<div className="mt-3"><h3>Number of results: ({totalAmountOfBooks})</h3></div>
 					<p>{indexOfFirstBook + 1} to {lastItem} of {totalAmountOfBooks}</p>
 					{books.map(book => (
-						<ChangeQuantityOfBook book={book} key={book.id} />
+						<ChangeQuantityOfBook book={book} key={book.id} deleteBook={deleteBook}/>
 					))}
 				</Fragment>
 				:
