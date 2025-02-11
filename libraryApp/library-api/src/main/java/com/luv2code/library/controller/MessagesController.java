@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import static com.luv2code.library.constants.ApplicationConstants.USER_EMAIL;
 import static com.luv2code.library.constants.ApplicationConstants.USER_TYPE;
-import static com.luv2code.library.utils.ExtractJWT.payloadJwtExtraction;
+import static com.luv2code.library.utils.AppUtil.payloadJwtExtraction;
 
 @CrossOrigin("http://localhost:3000")
 @RestController
@@ -32,12 +32,5 @@ public class MessagesController {
         messagesService.putMessage(adminQuestionRequest,
                 payloadJwtExtraction(token, USER_EMAIL), payloadJwtExtraction(token, USER_TYPE));
     }
-
-    /*@PutMapping("/admin/message")
-    public void putMessage(@RequestBody AdminQuestionRequest adminQuestionRequest,
-                           @RequestParam("userEmail") String userEmail,
-                           @RequestParam("userType") String userType) throws Exception {
-        messagesService.putMessage(adminQuestionRequest, userEmail, userType);
-    }*/
 
 }

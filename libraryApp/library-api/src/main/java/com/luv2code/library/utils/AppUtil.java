@@ -4,7 +4,7 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ExtractJWT {
+public class AppUtil {
 
     public static String payloadJwtExtraction(String token, String extraction) {
         String[] chunks = token.replace("Bearer ", "").split("\\.");
@@ -28,6 +28,10 @@ public class ExtractJWT {
             return map.get(extraction);
         }
         return null;
+    }
+
+    public static void validateIfUserIsAdmin(String userType) throws Exception {
+        if (userType == null || !userType.equals("admin")) throw new Exception("Administration page only");
     }
 
 }

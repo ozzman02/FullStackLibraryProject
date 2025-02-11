@@ -6,6 +6,8 @@ import com.luv2code.library.requestmodels.AdminQuestionRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.luv2code.library.utils.AppUtil.validateIfUserIsAdmin;
+
 @Service
 @Transactional
 public class MessagesService {
@@ -25,8 +27,7 @@ public class MessagesService {
     public void putMessage(AdminQuestionRequest adminQuestionRequest, String userEmail, String userType)
             throws Exception {
 
-        if (userType == null || !userType.equals("admin"))
-            throw new Exception("Administration page only");
+        validateIfUserIsAdmin(userType);
 
         Message message = messageRepository.findById(adminQuestionRequest.getId())
                 .orElseThrow(() -> new Exception("Message not found"));

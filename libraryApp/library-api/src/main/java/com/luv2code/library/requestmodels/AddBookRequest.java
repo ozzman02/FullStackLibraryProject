@@ -1,4 +1,4 @@
-package com.luv2code.library.service;
+package com.luv2code.library.requestmodels;
 
 public class AddBookRequest {
 

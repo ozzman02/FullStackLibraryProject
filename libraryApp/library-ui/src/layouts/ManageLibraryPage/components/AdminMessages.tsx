@@ -3,19 +3,26 @@ import { Fragment, useEffect, useState } from "react";
 import MessageModel from "../../../models/MessageModel";
 import { SpinnerLoading } from "../../Utils/SpinnerLoading";
 import { Pagination } from "../../Utils/Pagination";
-import { AdminMessage } from "./AdminMessage";
+
 import AdminMessageRequest from "../../../models/AdminMessageRequest";
+import { AdminMessage } from "./AdminMessage";
 
 export const AdminMessages = () => {
 
 	const { authState } = useOktaAuth();
 
 	const [isLoadingMessages, setIsLoadingMessages] = useState(true);
+
 	const [httpError, setHttpError] = useState(null);
+	
 	const [messages, setMessages] = useState<MessageModel[]>([]);
+	
 	const [messagesPerPage] = useState(5);
+	
 	const [currentPage, setCurrentPage] = useState(1);
+	
 	const [totalPages, setTotalPages] = useState(0);
+	
 	const [btnSubmit, setBtnSubmit] = useState(false);
 
 	useEffect(() => {
@@ -23,14 +30,14 @@ export const AdminMessages = () => {
 			if (authState && authState?.isAuthenticated) {
 				const baseUrl = "http://localhost:8080/api/messages/search/findByClosed";
 				const url = `${baseUrl}?closed=false&page=${currentPage - 1}&size=${messagesPerPage}`;
-				/*const requestOptions = {
+				const requestOptions = {
 					method: 'GET',
 					headers: {
 						Authorization: `Bearer ${authState?.accessToken?.accessToken}`,
 						'Content-Type': 'application/json'
 					}
-				};*/
-				const messagesResponse = await fetch(url);
+				};
+				const messagesResponse = await fetch(url, requestOptions);
 				if (!messagesResponse.ok) {
 					throw new Error('Something went wrong!');
 				}
@@ -52,11 +59,11 @@ export const AdminMessages = () => {
 				setMessages(loadedMessages);
 			}
 			setIsLoadingMessages(false);
-		}
+		};
 		fetchUserMessages().catch((error: any) => {
 			setIsLoadingMessages(false);
 			setHttpError(error.message);
-		})
+		});
 		window.scrollTo(0, 0);
 	}, [authState, currentPage, messagesPerPage, btnSubmit]);
 
@@ -72,17 +79,16 @@ export const AdminMessages = () => {
 
 	async function submitResponseToQuestion(id: number, response: string) {
 		if (authState && authState?.isAuthenticated && id !== null && response !== '') {
+			const url = `http://localhost:8080/api/messages/secure/admin/message`;
 			const messageAdminRequestModel: AdminMessageRequest = new AdminMessageRequest(id, response);
-			const userEmail = authState?.accessToken?.claims.sub;
-			const userType = authState?.accessToken?.claims.userType;
 			const requestOptions = {
 				method: 'PUT',
 				headers: {
+					Authorization: `Bearer ${authState?.accessToken?.accessToken}`,
 					'Content-Type': 'application/json'	
 				},
 				body: JSON.stringify(messageAdminRequestModel)
 			};
-			const url = `http://localhost:8080/api/messages/admin/message?userEmail=${userEmail}&userType=${userType}`;
 			const messageAdminRequestModelResponse = await fetch(url, requestOptions);
 			if (!messageAdminRequestModelResponse.ok) {
 				throw new Error('Something went wrong');

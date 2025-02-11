@@ -7,17 +7,21 @@ export const AddNewBook = () => {
 
     const { authState } = useOktaAuth();
 
-    // New Book
     const [title, setTitle] = useState('');
-    const [author, setAuthor] = useState('');
-    const [description, setDescription] = useState('');
-    const [copies, setCopies] = useState(0);
-    const [category, setCategory] = useState('Category');
-    const [selectedImage, setSelectedImage] = useState<any>(null);
+    
+	const [author, setAuthor] = useState('');
+    
+	const [description, setDescription] = useState('');
+    
+	const [copies, setCopies] = useState(0);
+    
+	const [category, setCategory] = useState('Category');
+    
+	const [selectedImage, setSelectedImage] = useState<any>(null);
 
-    // Displays
     const [displayWarning, setDisplayWarning] = useState(false);
-    const [displaySuccess, setDisplaySuccess] = useState(false);
+    
+	const [displaySuccess, setDisplaySuccess] = useState(false);
 
     function categoryField(value: string) {
         setCategory(value);

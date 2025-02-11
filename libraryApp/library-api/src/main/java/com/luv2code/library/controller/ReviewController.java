@@ -5,7 +5,7 @@ import com.luv2code.library.service.ReviewService;
 import org.springframework.web.bind.annotation.*;
 
 import static com.luv2code.library.constants.ApplicationConstants.USER_EMAIL;
-import static com.luv2code.library.utils.ExtractJWT.payloadJwtExtraction;
+import static com.luv2code.library.utils.AppUtil.payloadJwtExtraction;
 
 @CrossOrigin("http://localhost:3000")
 @RestController

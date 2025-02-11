@@ -35,32 +35,16 @@ export const App = () => {
             	<Navbar />
 					<div className='flex-grow-1'>
 						<Switch>
-							<Route path="/" exact>
-            					<Redirect to='/home' />
-							</Route>
-							<Route path="/home">
-            					<HomePage />
-							</Route>
-							<Route path='/search'>
-								<SearchBooksPage />
-							</Route>
-							<Route path='/reviewlist/:bookId'>
-								<ReviewListPage />
-							</Route>
-							<Route path='/checkout/:bookId'>
-								<BookCheckoutPage/>
-							</Route>
+							<Route path="/" exact><Redirect to='/home' /></Route>
+							<Route path="/home"><HomePage /></Route>
+							<Route path='/search'><SearchBooksPage /></Route>
+							<Route path='/reviewlist/:bookId'><ReviewListPage /></Route>
+							<Route path='/checkout/:bookId'><BookCheckoutPage/></Route>
 							<Route path='/login' render={() => <LoginWidget config={oktaConfig} />} />
 							<Route path='/login/callback' component={LoginCallback} />
-							<SecureRoute path='/shelf'>
-								<ShelfPage />
-							</SecureRoute>
-							<SecureRoute path="/messages">
-								<MessagesPage />
-							</SecureRoute>
-							<SecureRoute path="/admin">
-								<ManageLibraryPage />
-							</SecureRoute>
+							<SecureRoute path='/shelf'><ShelfPage /></SecureRoute>
+							<SecureRoute path="/messages"><MessagesPage /></SecureRoute>
+							<SecureRoute path="/admin"><ManageLibraryPage /></SecureRoute>
 						</Switch>
 					</div>
 				<Footer />
