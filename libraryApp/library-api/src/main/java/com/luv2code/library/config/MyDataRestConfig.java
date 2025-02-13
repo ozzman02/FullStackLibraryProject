@@ -9,17 +9,10 @@ import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
+import static com.luv2code.library.constants.ApplicationConstants.HTTPS_ALLOWED_ORIGINS;
+
 @Configuration
 public class MyDataRestConfig implements RepositoryRestConfigurer {
-
-    private static final String ALLOWED_ORIGINS = "http://localhost:3000";
-
-    private static final HttpMethod[] UNSUPPORTED_ACTIONS = {
-            HttpMethod.POST,
-            HttpMethod.PATCH,
-            HttpMethod.DELETE,
-            HttpMethod.PUT
-    };
 
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration configuration,
                                                      CorsRegistry corsRegistry) {
@@ -32,8 +25,15 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         disableHttpMethods(Message.class, configuration);
 
         corsRegistry.addMapping(configuration.getBasePath() + "/**")
-                .allowedOrigins(ALLOWED_ORIGINS);
+                .allowedOrigins(HTTPS_ALLOWED_ORIGINS);
     }
+
+    private static final HttpMethod[] UNSUPPORTED_ACTIONS = {
+            HttpMethod.POST,
+            HttpMethod.PATCH,
+            HttpMethod.DELETE,
+            HttpMethod.PUT
+    };
 
     private void disableHttpMethods(Class<?> theClass, RepositoryRestConfiguration repositoryRestConfiguration) {
         repositoryRestConfiguration.getExposureConfiguration()

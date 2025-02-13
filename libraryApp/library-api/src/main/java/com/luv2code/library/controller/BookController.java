@@ -7,10 +7,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.luv2code.library.constants.ApplicationConstants.HTTPS_ALLOWED_ORIGINS;
 import static com.luv2code.library.constants.ApplicationConstants.USER_EMAIL;
 import static com.luv2code.library.utils.AppUtil.payloadJwtExtraction;
 
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin(HTTPS_ALLOWED_ORIGINS)
 @RestController
 @RequestMapping("/api/books")
 public class BookController {
