@@ -5,7 +5,7 @@ import com.luv2code.library.service.ReviewService;
 import org.springframework.web.bind.annotation.*;
 
 import static com.luv2code.library.constants.ApplicationConstants.HTTPS_ALLOWED_ORIGINS;
-import static com.luv2code.library.constants.ApplicationConstants.USER_EMAIL;
+import static com.luv2code.library.constants.ApplicationConstants.USER_EMAIL_CLAIM;
 import static com.luv2code.library.utils.AppUtil.payloadJwtExtraction;
 
 @CrossOrigin(HTTPS_ALLOWED_ORIGINS)
@@ -23,7 +23,7 @@ public class ReviewController {
     public void postReview(@RequestHeader(value = "Authorization") String token,
                            @RequestBody ReviewRequest reviewRequest) throws Exception {
 
-        String userEmail = payloadJwtExtraction(token, USER_EMAIL);
+        String userEmail = payloadJwtExtraction(token, USER_EMAIL_CLAIM);
         if (userEmail == null) {
             throw new Exception("User email is missing");
         }
@@ -33,7 +33,7 @@ public class ReviewController {
     @GetMapping("/secure/user/book")
     public Boolean reviewBookByUser(@RequestHeader(value = "Authorization") String token,
                                     @RequestParam Long bookId) throws Exception {
-        String userEmail = payloadJwtExtraction(token, USER_EMAIL);
+        String userEmail = payloadJwtExtraction(token, USER_EMAIL_CLAIM);
         if (userEmail == null) {
             throw new Exception("User email is missing");
         }

@@ -15,10 +15,8 @@ export const Carousel = () => {
 	const [httpError, setHttpError] = useState(null);
 
 	useEffect(() => {
-		
 		const fetchBooks = async () => {
 			const url: string = `${REACT_API_URL}/books?page=0&size=9`;
-			console.log(url);
 			const response = await fetch(url);
 			if (!response.ok) {
 				throw new Error('Something went wrong!');

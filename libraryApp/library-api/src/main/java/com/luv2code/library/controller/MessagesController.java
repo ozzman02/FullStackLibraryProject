@@ -22,14 +22,14 @@ public class MessagesController {
     @PostMapping("/secure/add/message")
     public void postMessage(@RequestHeader(value = "Authorization") String token,
                             @RequestBody Message messageRequest) {
-        messagesService.postMessage(messageRequest, payloadJwtExtraction(token, USER_EMAIL));
+        messagesService.postMessage(messageRequest, payloadJwtExtraction(token, USER_EMAIL_CLAIM));
     }
 
     @PutMapping("/secure/admin/message")
     public void putMessage(@RequestHeader(value = "Authorization") String token,
                            @RequestBody AdminQuestionRequest adminQuestionRequest) throws Exception {
         messagesService.putMessage(adminQuestionRequest,
-                payloadJwtExtraction(token, USER_EMAIL), payloadJwtExtraction(token, USER_TYPE));
+                payloadJwtExtraction(token, USER_EMAIL_CLAIM), payloadJwtExtraction(token, USER_TYPE_CLAIM));
     }
 
 }
