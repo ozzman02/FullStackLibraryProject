@@ -1,9 +1,9 @@
 import { useOktaAuth } from "@okta/okta-react";
 import { useState } from "react";
 import { Redirect } from "react-router-dom";
-import { AdminMessages } from "./Components/AdminMessages";
-import { AddNewBook } from "./Components/AddNewBook";
-import { ChangeQuantityOfBooks } from "./Components/ChangeQuantityOfBooks";
+import { AdminMessages } from "./components/AdminMessages";
+import { AddNewBook } from "./components/AddNewBook";
+import { ChangeQuantityOfBooks } from "./components/ChangeQuantityOfBooks";
 
 export const ManageLibraryPage = () => {
 
