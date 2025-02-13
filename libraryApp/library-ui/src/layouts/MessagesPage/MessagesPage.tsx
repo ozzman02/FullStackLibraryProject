@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { PostNewMessage } from "./Components/PostNewMessage";
-import { Messages } from "./Components/Messages";
+import { PostNewMessage } from "./components/PostNewMessage";
+import { Messages } from "./components/Messages";
 
 export const MessagesPage = () => {
 

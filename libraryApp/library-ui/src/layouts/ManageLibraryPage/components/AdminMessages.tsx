@@ -6,6 +6,7 @@ import { Pagination } from "../../Utils/Pagination";
 
 import AdminMessageRequest from "../../../models/AdminMessageRequest";
 import { AdminMessage } from "./AdminMessage";
+import { REACT_API_URL } from "../../Utils/AppUtil";
 
 export const AdminMessages = () => {
 
@@ -28,7 +29,7 @@ export const AdminMessages = () => {
 	useEffect(() => {
 		const fetchUserMessages = async () => {
 			if (authState && authState?.isAuthenticated) {
-				const baseUrl = "http://localhost:8080/api/messages/search/findByClosed";
+				const baseUrl = `${REACT_API_URL}/messages/search/findByClosed`;
 				const url = `${baseUrl}?closed=false&page=${currentPage - 1}&size=${messagesPerPage}`;
 				const requestOptions = {
 					method: 'GET',
@@ -79,7 +80,7 @@ export const AdminMessages = () => {
 
 	async function submitResponseToQuestion(id: number, response: string) {
 		if (authState && authState?.isAuthenticated && id !== null && response !== '') {
-			const url = `http://localhost:8080/api/messages/secure/admin/message`;
+			const url = `${REACT_API_URL}/messages/secure/admin/message`;
 			const messageAdminRequestModel: AdminMessageRequest = new AdminMessageRequest(id, response);
 			const requestOptions = {
 				method: 'PUT',

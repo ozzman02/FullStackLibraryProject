@@ -4,7 +4,7 @@ import HistoryModel from "../../../models/HistoryModel";
 import { SpinnerLoading } from "../../Utils/SpinnerLoading";
 import { Link } from "react-router-dom";
 import { Pagination } from "../../Utils/Pagination";
-import { renderBookImage, renderDefaultBookImage } from "../../Utils/AppUtil";
+import { REACT_API_URL, renderBookImage, renderDefaultBookImage } from "../../Utils/AppUtil";
 
 export const HistoryPage = () => {
 
@@ -23,7 +23,7 @@ export const HistoryPage = () => {
 	useEffect(() => {
 		const fetchUserHistory = async () => {
 			if (authState && authState.isAuthenticated) {
-				const url = `http://localhost:8080/api/histories/search/findBooksByUserEmail?userEmail=${authState.accessToken?.claims.sub}&page${currentPage - 1}&size=5`;
+				const url = `${REACT_API_URL}/histories/search/findBooksByUserEmail?userEmail=${authState.accessToken?.claims.sub}&page${currentPage - 1}&size=5`;
 				const requestOptions = {
 					method: 'GET',
 					headers: {

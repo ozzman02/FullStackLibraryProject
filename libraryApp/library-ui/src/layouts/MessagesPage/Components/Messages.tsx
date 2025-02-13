@@ -3,6 +3,7 @@ import { Fragment, useEffect, useState } from "react";
 import MessageModel from "../../../models/MessageModel";
 import { SpinnerLoading } from "../../Utils/SpinnerLoading";
 import { Pagination } from "../../Utils/Pagination";
+import { REACT_API_URL } from "../../Utils/AppUtil";
 
 export const Messages = () => {
 	
@@ -23,7 +24,7 @@ export const Messages = () => {
 	useEffect(() => {
 		const fetchUserMessages = async () => {
 			if (authState && authState?.isAuthenticated) {
-				const baseEndpointUrl = "http://localhost:8080/api/messages/search/findByUserEmail";
+				const baseEndpointUrl = `${REACT_API_URL}/messages/search/findByUserEmail`;
 				const url = `${baseEndpointUrl}?userEmail=${authState?.accessToken?.claims.sub}&page=${currentPage - 1}&size=${messagesPerPage}`;
 				const requestOptions = {
 					method: 'GET',

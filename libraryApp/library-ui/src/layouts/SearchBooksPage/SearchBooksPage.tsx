@@ -4,6 +4,7 @@ import BookModel from "../../models/BookModel";
 import { SpinnerLoading } from "../Utils/SpinnerLoading";
 import { SearchBook } from "./components/SearchBook";
 import { Pagination } from "../Utils/Pagination";
+import { REACT_API_URL } from "../Utils/AppUtil";
 
 export const SearchBooksPage = () => {
 	
@@ -29,7 +30,7 @@ export const SearchBooksPage = () => {
 
 	useEffect(() => {
 		const fetchBooks = async () => {
-			const baseUrl: string = "http://localhost:8080/api/books";
+			const baseUrl: string = `${REACT_API_URL}/books`;
 			let url: string = '';
 			if (searchUrl === '') {
 				url = `${baseUrl}?page=${currentPage - 1}&size=${booksPerPage}`;

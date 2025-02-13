@@ -3,6 +3,7 @@ import { ReturnBook } from "./ReturnBook";
 import BookModel from "../../../models/BookModel";
 import { SpinnerLoading } from "../../Utils/SpinnerLoading";
 import { Link } from "react-router-dom";
+import { REACT_API_URL } from "../../Utils/AppUtil";
 
 
 export const Carousel = () => {
@@ -14,9 +15,10 @@ export const Carousel = () => {
 	const [httpError, setHttpError] = useState(null);
 
 	useEffect(() => {
+		
 		const fetchBooks = async () => {
-			const baseUrl: string = "http://localhost:8080/api/books";
-			const url: string = `${baseUrl}?page=0&size=9`;
+			const url: string = `${REACT_API_URL}/books?page=0&size=9`;
+			console.log(url);
 			const response = await fetch(url);
 			if (!response.ok) {
 				throw new Error('Something went wrong!');

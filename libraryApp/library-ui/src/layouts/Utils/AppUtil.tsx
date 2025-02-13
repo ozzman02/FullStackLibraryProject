@@ -10,3 +10,4 @@ export const renderBookImage = (img: string, width: string, height: string, alt:
 	);
 };
 
+export const REACT_API_URL = process.env.REACT_APP_API?.slice(1);

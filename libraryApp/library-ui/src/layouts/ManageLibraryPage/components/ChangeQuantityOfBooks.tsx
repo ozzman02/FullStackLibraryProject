@@ -3,6 +3,7 @@ import BookModel from "../../../models/BookModel";
 import { SpinnerLoading } from "../../Utils/SpinnerLoading";
 import { Pagination } from "../../Utils/Pagination";
 import { ChangeQuantityOfBook } from "./ChangeQuantityOfBook";
+import { REACT_API_URL } from "../../Utils/AppUtil";
 
 export const ChangeQuantityOfBooks = () => {
 
@@ -24,7 +25,7 @@ export const ChangeQuantityOfBooks = () => {
 
 	useEffect(() => {
 		const fetchBooks = async () => {
-			const baseUrl: string = `http://localhost:8080/api/books?page=${currentPage - 1}&size=${booksPerPage}`;
+			const baseUrl: string = `${REACT_API_URL}/books?page=${currentPage - 1}&size=${booksPerPage}`;
 			const response = await fetch(baseUrl);
 			if (!response.ok) {
 				throw new Error('Something went wrong!');
