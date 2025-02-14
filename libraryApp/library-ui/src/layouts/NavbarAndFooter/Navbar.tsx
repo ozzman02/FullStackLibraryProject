@@ -36,6 +36,7 @@ export const Navbar = () => {
 		);
 	}
 
+	/** Auth Token */
 	console.log(authState);
 
     return (
@@ -64,6 +65,11 @@ export const Navbar = () => {
 						{authState.isAuthenticated &&
 							<li className='nav-item'>
                             	<NavLink className='nav-link' to="/shelf">Shelf</NavLink>
+                        	</li>
+						}
+						{authState.isAuthenticated &&
+							<li className='nav-item'>
+                            	<NavLink className='nav-link' to="/fees">Pay Fees</NavLink>
                         	</li>
 						}
 						{authState.isAuthenticated && authState.accessToken?.claims?.userType === 'admin' && 
