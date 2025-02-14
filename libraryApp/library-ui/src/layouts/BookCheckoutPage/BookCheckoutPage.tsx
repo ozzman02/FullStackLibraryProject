@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import BookModel from "../../models/BookModel";
 import { SpinnerLoading } from "../Utils/SpinnerLoading";
-import { REACT_API_URL, renderBookImage, renderDefaultBookImage } from "../Utils/AppUtil";
+import { REACT_API_URL, renderBookImage, renderDefaultBookImage, requestOptions } from "../Utils/AppUtil";
 import { StarsReview } from "../Utils/StarsReview";
 import { CheckoutAndReviewBox } from "./CheckoutAndReviewBox";
 import ReviewModel from "../../models/ReviewModel";
@@ -36,6 +36,8 @@ export const BookCheckoutPage = () => {
 	const [isReviewLeft, setIsReviewLeft] = useState(false);
 
 	const [isLoadingUserReview, setIsLoadingUserReview] = useState(true);
+
+	const [displayError, setDisplayError] = useState(false);
 
 	const bookId = (window.location.pathname).split('/')[2];
 
@@ -105,14 +107,7 @@ export const BookCheckoutPage = () => {
 		const fetchUserCurrentLoansCount = async () => {
 			if (authState && authState.isAuthenticated) {
 				const url = `${REACT_API_URL}/books/secure/currentloans/count`;
-				const requestOptions = {
-					method: 'GET',
-					headers: {
-						Authorization: `Bearer ${authState.accessToken?.accessToken}`,
-						'Content-Type': 'application/json'
-					}
-				};
-				const currentLoansCountResponse = await fetch(url, requestOptions);
+				const currentLoansCountResponse = await fetch(url, requestOptions('GET', `Bearer ${authState.accessToken?.accessToken}`));
 				if (!currentLoansCountResponse.ok) {
 					throw new Error('Something went wrong!');
 				}
@@ -131,14 +126,7 @@ export const BookCheckoutPage = () => {
 		const fetchUserCheckedOutBook = async () => {
 			if (authState && authState.isAuthenticated) {
 				const url = `${REACT_API_URL}/books/secure/ischeckedout/byuser?bookId=${bookId}`;
-				const requestOptions = {
-					method: 'GET',
-					headers: {
-						Authorization: `Bearer ${authState.accessToken?.accessToken}`,
-						'Content-Type': 'application/json'
-					}
-				};
-				const bookCheckedOut = await fetch(url, requestOptions);
+				const bookCheckedOut = await fetch(url, requestOptions('GET', `Bearer ${authState.accessToken?.accessToken}`));
 				if (!bookCheckedOut.ok) {
 					throw new Error('Something went wrong!');
 				}
@@ -157,14 +145,7 @@ export const BookCheckoutPage = () => {
 		const fetchUserReviewBook = async () => {
 			if (authState && authState.isAuthenticated) {
 				const url = `${REACT_API_URL}/reviews/secure/user/book?bookId=${bookId}`;
-				const requestOptions = {
-					method: 'GET',
-					headers: {
-						Authorization: `Bearer ${authState.accessToken?.accessToken}`,
-						'Content-Type': 'application/json'
-					}
-				};
-				const userReview = await fetch(url, requestOptions);
+				const userReview = await fetch(url, requestOptions('GET', `Bearer ${authState.accessToken?.accessToken}`));
 				if (!userReview.ok) {
 					throw new Error('Something went wrong');
 				}
@@ -193,17 +174,19 @@ export const BookCheckoutPage = () => {
 
 	async function checkoutBook() {
 		const url = `${REACT_API_URL}/books/secure/checkout?bookId=${book?.id}`;
-		const requestOptions = {
+		/*const requestOptions = {
 			method: 'PUT',
 			headers: {
 				Authorization: `Bearer ${authState?.accessToken?.accessToken}`,
 				'Content-Type': 'application/json'
 			}
-		};
-		const checkoutResponse = await fetch(url, requestOptions);
+		};*/
+		const checkoutResponse = await fetch(url, requestOptions('PUT', `Bearer ${authState?.accessToken?.accessToken}`));
 		if (!checkoutResponse.ok) {
+			setDisplayError(true);
 			throw new Error('Something went wrong!');
 		}
+		setDisplayError(false);
 		setIsCheckedOut(true);
 	};
 
@@ -214,15 +197,17 @@ export const BookCheckoutPage = () => {
 		}
 		const reviewRequestModel = new ReviewRequestModel(starInput, bookId, reviewDescription);
 		const url = `${REACT_API_URL}/reviews/secure`;
-		const requestOptions = {
+		const bearerToken = `Bearer ${authState?.accessToken?.accessToken}`;
+		const requestBody = JSON.stringify(reviewRequestModel);
+		/*const requestOptions = {
 			method: 'POST',
 			headers: {
 				Authorization: `Bearer ${authState?.accessToken?.accessToken}`,
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify(reviewRequestModel)
-		};
-		const returnResponse = await fetch(url, requestOptions);
+		};*/
+		const returnResponse = await fetch(url, requestOptions('POST', bearerToken, requestBody));
 		if (!returnResponse.ok) {
 			throw new Error('Something went wrong!');
 		}
@@ -234,6 +219,11 @@ export const BookCheckoutPage = () => {
 	return (
 		<div>
 			<div className="container d-none d-lg-block">
+				{displayError && 
+					<div className="alert alert-danger mt-3" role="alert">
+						Please pay outstanding fees and/or return late book(s).
+					</div>
+				}
 				<div className="row mt-5">
 					<div className="col-sm-2 col-md-2">
 						{book?.image ? 

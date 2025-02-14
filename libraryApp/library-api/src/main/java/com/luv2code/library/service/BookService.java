@@ -48,33 +48,25 @@ public class BookService {
                 throw new RuntimeException("Book already checked out by user");
             }
 
-            //SimpleDateFormat formatter = new SimpleDateFormat(YEAR_MONTH_DAY_FORMAT);
-
             List<Checkout> currentBooksCheckedOut = checkoutRepository.findBooksByUserEmail(userEmail);
-            boolean booksNeedToBeReturned = false;
-            int i = 0;
 
-            try {
-                while (i < currentBooksCheckedOut.size() && !booksNeedToBeReturned) {
-                    /*Date returnDate = formatter.parse(currentBooksCheckedOut.get(i).getReturnDate());
-                    Date currentDate = formatter.parse(LocalDate.now().toString());
-                    TimeUnit time = TimeUnit.DAYS;
-                    double differenceInTime = time.convert(returnDate.getTime() - currentDate.getTime(),
-                            TimeUnit.MILLISECONDS);*/
-                    if (getDifferenceInTime(currentBooksCheckedOut.get(i)) < 0) {
-                        booksNeedToBeReturned = true;
-                    }
-                }
-            } catch (Exception exception) {
-                throw new RuntimeException("Error parsing dates");
-            }
+            boolean booksNeedToBeReturned = currentBooksCheckedOut.stream()
+                    .anyMatch(currentBookCheckedOut -> {
+                        try {
+                            return getDifferenceInTime(currentBookCheckedOut) < 0;
+                        } catch (ParseException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
 
             Optional<Payment> userPaymentOptional = paymentRepository.findByUserEmail(userEmail);
 
             if ((userPaymentOptional.isPresent() && userPaymentOptional.get().getAmount() > 0)
                     || booksNeedToBeReturned) {
                 throw new RuntimeException("Outstanding Fees");
-            } else {
+            }
+
+            if (userPaymentOptional.isEmpty()) {
                 Payment payment = new Payment();
                 payment.setAmount(00.00);
                 payment.setUserEmail(userEmail);
@@ -109,16 +101,11 @@ public class BookService {
                 .map(Checkout::getBookId)
                 .toList();
         List<Book> books = bookRepository.findBooksByBookIds(bookIdList);
-        //SimpleDateFormat simpleDateFormat = new SimpleDateFormat(YEAR_MONTH_DAY_FORMAT);
+
         for (Book book : books) {
             Optional<Checkout> checkoutOptional = checkoutList.stream()
                     .filter(checkout -> Objects.equals(checkout.getBookId(), book.getId())).findFirst();
             if (checkoutOptional.isPresent()) {
-                /*Date returnDate = simpleDateFormat.parse(checkoutOptional.get().getReturnDate());
-                Date currentDate = simpleDateFormat.parse(LocalDate.now().toString());
-                TimeUnit time = TimeUnit.DAYS;
-                double differenceInTime = time.convert(returnDate.getTime() - currentDate.getTime(),
-                        TimeUnit.MILLISECONDS);*/
                 shelfCurrentLoansResponseList.add(new ShelfCurrentLoansResponse(book,
                         (int) getDifferenceInTime(checkoutOptional.get())));
             }
@@ -135,17 +122,7 @@ public class BookService {
         book.get().setCopiesAvailable(book.get().getCopiesAvailable() + 1);
         bookRepository.save(book.get());
 
-        /*SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-        Date d1 = sdf.parse(validateCheckout.getReturnDate());
-        Date d2 = sdf.parse(LocalDate.now().toString());
-
-        TimeUnit time = TimeUnit.DAYS;
-
-        double differenceInTime = time.convert(d1.getTime() - d2.getTime(), TimeUnit.MILLISECONDS);*/
-
         double differenceInTime = getDifferenceInTime(validateCheckout);
-
 
         if (differenceInTime < 0) {
             Optional<Payment> paymentOptional = paymentRepository.findByUserEmail(userEmail);
