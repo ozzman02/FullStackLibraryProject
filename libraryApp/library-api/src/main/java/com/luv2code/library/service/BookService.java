@@ -151,7 +151,6 @@ public class BookService {
         if (validateCheckout == null) {
             throw new Exception("Book does not exist or not checked out by user");
         }
-        //SimpleDateFormat formatter = new SimpleDateFormat(YEAR_MONTH_DAY_FORMAT);
         Date returnDate = YEAR_MONTH_DAY_FORMATTER.parse(validateCheckout.getReturnDate());
         Date currentDate = YEAR_MONTH_DAY_FORMATTER.parse(LocalDate.now().toString());
         if (returnDate.compareTo(currentDate) > 0 || returnDate.compareTo(currentDate) == 0) {
